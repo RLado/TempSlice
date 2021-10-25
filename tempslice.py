@@ -90,8 +90,6 @@ def tempslice(start, end, imgs):
 
 
 def main():
-    # parameters - draw line and save image - then slice
-
     # Argument parser
     parser = argparse.ArgumentParser(description='Produces a PIL image containing a column of pixels for every input image.\
                                      The number and location of the pixels is chosen by the user by defining a\
@@ -128,6 +126,8 @@ def main():
         img.save(args.output + '_loc.png')
     else:
         img.show()
+    
+    img.close()
 
 
 # Main ==========================================================================
