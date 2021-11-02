@@ -61,3 +61,28 @@ optional arguments:
   -vs VERBOSE_SAVE, --verbose_save VERBOSE_SAVE
                         Saves the waveform detected over the image.(verbose flag must be True)
 ```
+
+# csv-fft
+### Utility to plot an unrefined fft from slice2csv files
+
+Help output:
+```
+usage: csv-fft.py [-h] -f SAMPLE_RATE -i INPUT [INPUT ...] [-o OUTPUT] [--dpi DPI] [-c FREQ_CAP FREQ_CAP] [-m {abs,imag}]
+
+Plots the fft(s) of the input slices csv
+
+required arguments:
+  -f SAMPLE_RATE, --sample_rate SAMPLE_RATE
+                        Sample rate in Hz (or fps)
+  -i INPUT [INPUT ...], --input INPUT [INPUT ...]
+                        List of input files
+
+optional arguments:
+  -o OUTPUT, --output OUTPUT
+                        Path for the output graph
+  --dpi DPI             Output graph dpi
+  -c FREQ_CAP FREQ_CAP, --freq_cap FREQ_CAP FREQ_CAP
+                        Frequency graph cutoff as: start end
+  -m {abs,imag}, --mode {abs,imag}
+                        Path for the output graph
+```
