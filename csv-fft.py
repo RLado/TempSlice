@@ -26,6 +26,7 @@ def main():
                           help='Frequency graph cutoff as: start end', required=False)
     optional.add_argument('-m', '--mode', type=str,
                           choices=['abs', 'imag'], default='abs', help='Path for the output graph')
+    optional.add_argument('--data_col', type=str, choices=['avg', 'lub', 'ulb'], default='avg', help='Data column to be used for fft, by default averages both columns')
 
     args = parser.parse_args()
 
@@ -57,7 +58,13 @@ def main():
         # sample spacing
         T = 1.0 / args.sample_rate
 
-        avgf = np.fft.fft((lub+ulb)/2)
+        if args.data_col == 'avg':
+            yf = np.fft.fft((lub+ulb)/2)
+        elif args.data_col == 'lub':
+            yf = np.fft.fft(lub)
+        elif args.data_col == 'ulb':
+            yf = np.fft.fft(ulb)
+
         xf = np.fft.fftfreq(N, T)[:N//2]
 
         if args.freq_cap != None:
@@ -70,12 +77,12 @@ def main():
                     ec = j
                     break
             xf = xf[sc:ec]
-            avgf = avgf[sc:ec]
+            yf = yf[sc:ec]
 
         if args.mode == 'abs':
-            plt.plot(xf, 2.0/N * np.abs(avgf[0:N//2]), linewidth=1)
+            plt.plot(xf, 2.0/N * np.abs(yf[0:N//2]), linewidth=1)
         elif args.mode == 'imag':
-            plt.plot(xf, 2.0/N * np.imag(avgf[0:N//2]), linewidth=1)
+            plt.plot(xf, 2.0/N * np.imag(yf[0:N//2]), linewidth=1)
 
         legend.append(os.path.basename(infile))
 

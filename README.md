@@ -85,4 +85,28 @@ optional arguments:
                         Frequency graph cutoff as: start end
   -m {abs,imag}, --mode {abs,imag}
                         Path for the output graph
+  --data_col {avg,lub,ulb}
+                        Data column to be used for fft, by default averages both columns
+```
+
+# threshold-slice
+### Thresholds a slice to black and white, to improve wave detection
+
+Help output:
+```
+usage: threshold-slice.py [-h] -t THRESHOLD -i INPUT -o OUTPUT [-v VERBOSE]
+
+Thresholds a slice to black and white, to improve wave detection
+
+required arguments:
+  -t THRESHOLD, --threshold THRESHOLD
+                        Grayscale limit for thresholding
+  -i INPUT, --input INPUT
+                        Input file
+  -o OUTPUT, --output OUTPUT
+                        Path for output file
+
+optional arguments:
+  -v VERBOSE, --verbose VERBOSE
+                        Shows both the original and the thresholded images
 ```
