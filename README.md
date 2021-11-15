@@ -80,6 +80,8 @@ required arguments:
 optional arguments:
   -o OUTPUT, --output OUTPUT
                         Path for the output graph
+  -od OUTPUT_DATA, --output_data OUTPUT_DATA
+                        Path for csv output files
   --dpi DPI             Output graph dpi
   -c FREQ_CAP FREQ_CAP, --freq_cap FREQ_CAP FREQ_CAP
                         Frequency graph cutoff as: start end

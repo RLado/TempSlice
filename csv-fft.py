@@ -20,13 +20,16 @@ def main():
                           nargs='+', help='List of input files', required=True)
     optional.add_argument('-o', '--output', type=str,
                           help='Path for the output graph')
+    optional.add_argument('-od', '--output_data', type=str,
+                          help='Path for csv output files')
     optional.add_argument('--dpi', type=int, default=300,
                           help='Output graph dpi')
     optional.add_argument('-c', '--freq_cap', type=float, nargs=2,
                           help='Frequency graph cutoff as: start end', required=False)
     optional.add_argument('-m', '--mode', type=str,
                           choices=['abs', 'imag'], default='abs', help='Path for the output graph')
-    optional.add_argument('--data_col', type=str, choices=['avg', 'lub', 'ulb'], default='avg', help='Data column to be used for fft, by default averages both columns')
+    optional.add_argument('--data_col', type=str, choices=['avg', 'lub', 'ulb'], default='avg',
+                          help='Data column to be used for fft, by default averages both columns')
 
     args = parser.parse_args()
 
@@ -85,6 +88,16 @@ def main():
             plt.plot(xf, 2.0/N * np.imag(yf[0:N//2]), linewidth=1)
 
         legend.append(os.path.basename(infile))
+
+        # Saving fft data to csv
+        if args.output_data != None:
+            with open(f'{os.path.join(args.output_data, os.path.basename(infile))}_fft.csv', 'w', newline='') as csvfile:
+                csvwriter = csv.writer(
+                    csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                csvwriter.writerow(['freq.', 'real', 'imag', 'mag'])
+
+                for xd, ydr, ydi, ydm in zip(xf, np.real(yf), np.imag(yf), np.abs(yf)):
+                    csvwriter.writerow([xd, ydr, ydi, ydm])
 
     plt.legend(legend, bbox_to_anchor=(0, 1, 1, 0), ncol=1)
     plt.grid()
