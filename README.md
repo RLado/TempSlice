@@ -87,6 +87,8 @@ optional arguments:
                         Frequency graph cutoff as: start end
   -m {abs,imag}, --mode {abs,imag}
                         Path for the output graph
+  -s {log,mag}, --scale {log,mag}
+                        Enable logarithmic scale on the y axis
   --data_col {avg,lub,ulb}
                         Data column to be used for fft, by default averages both columns
 ```

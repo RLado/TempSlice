@@ -28,6 +28,8 @@ def main():
                           help='Frequency graph cutoff as: start end', required=False)
     optional.add_argument('-m', '--mode', type=str,
                           choices=['abs', 'imag'], default='abs', help='Path for the output graph')
+    optional.add_argument('-s', '--scale', type=str, choices=[
+                          'log', 'mag'], default='mag', help='Enable logarithmic scale on the y axis')
     optional.add_argument('--data_col', type=str, choices=['avg', 'lub', 'ulb'], default='avg',
                           help='Data column to be used for fft, by default averages both columns')
 
@@ -99,6 +101,8 @@ def main():
                 for xd, ydr, ydi, ydm in zip(xf, np.real(yf), np.imag(yf), np.abs(yf)):
                     csvwriter.writerow([xd, ydr, ydi, ydm])
 
+    if args.scale == 'log':
+        plt.semilogy()
     plt.legend(legend, bbox_to_anchor=(0, 1, 1, 0), ncol=1)
     plt.grid()
     plt.grid(b=True, which='minor', linestyle='--')
