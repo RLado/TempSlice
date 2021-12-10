@@ -105,7 +105,7 @@ def main():
         plt.semilogy()
     plt.legend(legend, bbox_to_anchor=(0, 1, 1, 0), ncol=1)
     plt.grid()
-    plt.grid(b=True, which='minor', linestyle='--')
+    plt.grid(visible=True, which='minor', linestyle='--')
 
     if args.output != None:
         plt.savefig(args.output, dpi=args.dpi, bbox_inches='tight')
