@@ -98,7 +98,7 @@ def main():
                     csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
                 csvwriter.writerow(['freq.', 'real', 'imag', 'mag'])
 
-                for xd, ydr, ydi, ydm in zip(xf, np.real(yf), np.imag(yf), np.abs(yf)):
+                for xd, ydr, ydi, ydm in zip(xf, 2.0/N * np.real(yf[0:N//2]), 2.0/N * np.imag(yf[0:N//2]), 2.0/N * np.abs(yf[0:N//2])):
                     csvwriter.writerow([xd, ydr, ydi, ydm])
 
     if args.scale == 'log':
