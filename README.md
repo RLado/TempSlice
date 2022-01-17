@@ -67,7 +67,7 @@ optional arguments:
 
 Help output:
 ```
-usage: csv-fft.py [-h] -f SAMPLE_RATE -i INPUT [INPUT ...] [-o OUTPUT] [--dpi DPI] [-c FREQ_CAP FREQ_CAP] [-m {abs,imag}]
+usage: csv-fft.py [-h] -f SAMPLE_RATE -i INPUT [INPUT ...] [-o OUTPUT] [-od OUTPUT_DATA] [--dpi DPI] [-c FREQ_CAP FREQ_CAP] [-m {abs,imag}] [-s {log,mag}] [--data_col {avg,lub,ulb}] [-w {none,hamming,bartlett,blackman,hanning}]
 
 Plots the fft(s) of the input slices csv
 
@@ -91,6 +91,8 @@ optional arguments:
                         Enable logarithmic scale on the y axis
   --data_col {avg,lub,ulb}
                         Data column to be used for fft, by default averages both columns
+  -w {none,hamming,bartlett,blackman,hanning}, --window {none,hamming,bartlett,blackman,hanning}
+                        Apply window before FFT
 ```
 
 # threshold-slice
@@ -113,4 +115,34 @@ required arguments:
 optional arguments:
   -v VERBOSE, --verbose VERBOSE
                         Shows both the original and the thresholded images
+```
+
+# csv-specgram
+### Plots the spectrogram of the input slice csv
+
+Help output:
+```
+usage: csv-specgram.py [-h] -f SAMPLE_RATE -i INPUT [-o OUTPUT] [--dpi DPI] [-c FREQ_CAP FREQ_CAP] [-s {log,mag}] [--data_col {avg,lub,ulb}] [-w {none,hamming,bartlett,blackman,hanning}]
+
+Plots the spectrogram of the input slice csv
+
+required arguments:
+  -f SAMPLE_RATE, --sample_rate SAMPLE_RATE
+                        Sample rate in Hz (or fps)
+  -i INPUT, --input INPUT
+                        List of input files
+
+optional arguments:
+  -o OUTPUT, --output OUTPUT
+                        Path for the output graph
+  --dpi DPI             Output graph dpi
+  -c FREQ_CAP FREQ_CAP, --freq_cap FREQ_CAP FREQ_CAP
+                        Frequency graph cutoff as: start end
+  -s {log,mag}, --scale {log,mag}
+                        Enable logarithmic scale on the y axis
+  --data_col {avg,lub,ulb}
+                        Data column to be used for fft, by default averages both columns
+  -w {none,hamming,bartlett,blackman,hanning}, --window {none,hamming,bartlett,blackman,hanning}
+                        Apply window before FFT
+
 ```

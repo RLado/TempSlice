@@ -32,6 +32,8 @@ def main():
                           'log', 'mag'], default='mag', help='Enable logarithmic scale on the y axis')
     optional.add_argument('--data_col', type=str, choices=['avg', 'lub', 'ulb'], default='avg',
                           help='Data column to be used for fft, by default averages both columns')
+    optional.add_argument('-w', '--window', type=str,
+                          choices=['none','hamming','bartlett','blackman','hanning'], default='none', help='Apply window before FFT')
 
     args = parser.parse_args()
 
@@ -63,12 +65,24 @@ def main():
         # sample spacing
         T = 1.0 / args.sample_rate
 
+        #Check if windowing is necessary
+        if (args.window) == 'hamming':
+            w = np.hamming(N)
+        elif (args.window) == 'bartlett':
+            w = np.bartlett(N)
+        elif (args.window) == 'blackman':
+            w = np.blackman(N)
+        elif (args.window) == 'hanning':
+            w = np.hanning(N)
+        else:
+            w = np.ones(N)
+
         if args.data_col == 'avg':
-            yf = np.fft.fft((lub+ulb)/2)
+            yf = np.fft.fft((lub+ulb)/2*w)
         elif args.data_col == 'lub':
-            yf = np.fft.fft(lub)
+            yf = np.fft.fft(lub*w)
         elif args.data_col == 'ulb':
-            yf = np.fft.fft(ulb)
+            yf = np.fft.fft(ulb*w)
 
         xf = np.fft.fftfreq(N, T)[:N//2]
 
