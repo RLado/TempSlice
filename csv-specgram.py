@@ -25,7 +25,7 @@ def main():
     optional.add_argument('-c', '--freq_cap', type=float, nargs=2,
                           help='Frequency graph cutoff as: start end', required=False)
     optional.add_argument('-s', '--scale', type=str, choices=[
-                          'log', 'mag'], default='mag', help='Enable logarithmic scale on the y axis')
+                          'default', 'linear', 'dB'], default='default', help='Enable logarithmic scale on the y axis')
     optional.add_argument('--data_col', type=str, choices=['avg', 'lub', 'ulb'], default='avg',
                           help='Data column to be used for fft, by default averages both columns')
     optional.add_argument('-w', '--window', type=str,
@@ -79,19 +79,19 @@ def main():
         plt.plot(np.linspace(0, N/args.sample_rate, N), (lub+ulb)/2)
         plt.subplot(212)
         powerSpectrum, frequenciesFound, time, imageAxis = plt.specgram(
-            (lub+ulb)/2*w, Fs=args.sample_rate, cmap=cmap)
+            (lub+ulb)/2*w, Fs=args.sample_rate, scale=args.scale, cmap=cmap)
     elif args.data_col == 'lub':
         plt.subplot(211)
         plt.plot(np.linspace(0, N/args.sample_rate, N), lub)
         plt.subplot(212)
         powerSpectrum, frequenciesFound, time, imageAxis = plt.specgram(
-            lub*w, Fs=args.sample_rate, cmap=cmap)
+            lub*w, Fs=args.sample_rate, scale=args.scale, cmap=cmap)
     elif args.data_col == 'ulb':
         plt.subplot(211)
         plt.plot(np.linspace(0, N/args.sample_rate, N), ulb)
         plt.subplot(212)
         powerSpectrum, frequenciesFound, time, imageAxis = plt.specgram(
-            ulb*w, Fs=args.sample_rate, cmap=cmap)
+            ulb*w, Fs=args.sample_rate, scale=args.scale, cmap=cmap)
 
     # Cap axis
     plt.subplot(211)
