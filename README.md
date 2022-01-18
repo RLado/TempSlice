@@ -146,3 +146,25 @@ optional arguments:
                         Apply window before FFT
 
 ```
+
+# csv-smooth
+### Smoothes data from a csv using a cubic spline approximation
+
+```
+usage: csv-smooth.py [-h] -i INPUT [-o OUTPUT] [--data_col {avg,lub,ulb}] [-s SMOOTH] [-p PLOT]
+
+Smoothens data from a csv using a cubic spline approximation
+
+required arguments:
+  -i INPUT, --input INPUT
+                        List of input files
+
+optional arguments:
+  -o OUTPUT, --output OUTPUT
+                        Path for the output file
+  --data_col {avg,lub,ulb}
+                        Data column to be used for fft, by default averages both columns
+  -s SMOOTH, --smooth SMOOTH
+                        Smoothing factor [0-1]. Defaults to 0.85.
+  -p PLOT, --plot PLOT  Plot the resulting function
+```
