@@ -3,6 +3,7 @@ import numpy as np
 import csv
 import argparse
 import os
+import csaps
 
 
 def main():
@@ -32,6 +33,8 @@ def main():
                           'log', 'mag'], default='mag', help='Enable logarithmic scale on the y axis')
     optional.add_argument('--data_col', type=str, choices=['avg', 'lub', 'ulb'], default='avg',
                           help='Data column to be used for fft, by default averages both columns')
+    optional.add_argument('--smooth', type=float, default=None,
+                          help='Smoothing factor [0-1]. Smoothens data using a cubic spline approximation')
     optional.add_argument('-w', '--window', type=str,
                           choices=['none','hamming','bartlett','blackman','hanning'], default='none', help='Apply window before FFT')
 
@@ -97,11 +100,20 @@ def main():
                     break
             xf = xf[sc:ec]
             yf = yf[sc:ec]
+        
+        if args.smooth != None:
+            yfr = csaps.csaps(xf, 2.0/N * np.real(yf[0:N//2]), xf, smooth=args.smooth)
+            yfi = csaps.csaps(xf, 2.0/N * np.imag(yf[0:N//2]), xf, smooth=args.smooth)
+            yfm = csaps.csaps(xf, 2.0/N * np.abs(yf[0:N//2]), xf, smooth=args.smooth)
+        else:
+            yfr = 2.0/N * np.real(yf[0:N//2])
+            yfi = 2.0/N * np.imag(yf[0:N//2])
+            yfm = 2.0/N * np.abs(yf[0:N//2])
 
         if args.mode == 'abs':
-            plt.plot(xf, 2.0/N * np.abs(yf[0:N//2]), linewidth=1)
+            plt.plot(xf, yfm, linewidth=1)
         elif args.mode == 'imag':
-            plt.plot(xf, 2.0/N * np.imag(yf[0:N//2]), linewidth=1)
+            plt.plot(xf, yfi, linewidth=1)
 
         legend.append(os.path.basename(infile))
 
@@ -112,7 +124,7 @@ def main():
                     csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
                 csvwriter.writerow(['freq.', 'real', 'imag', 'mag'])
 
-                for xd, ydr, ydi, ydm in zip(xf, 2.0/N * np.real(yf[0:N//2]), 2.0/N * np.imag(yf[0:N//2]), 2.0/N * np.abs(yf[0:N//2])):
+                for xd, ydr, ydi, ydm in zip(xf, yfr, yfi, yfm):
                     csvwriter.writerow([xd, ydr, ydi, ydm])
 
     if args.scale == 'log':

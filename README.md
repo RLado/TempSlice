@@ -67,7 +67,8 @@ optional arguments:
 
 Help output:
 ```
-usage: csv-fft.py [-h] -f SAMPLE_RATE -i INPUT [INPUT ...] [-o OUTPUT] [-od OUTPUT_DATA] [--dpi DPI] [-c FREQ_CAP FREQ_CAP] [-m {abs,imag}] [-s {log,mag}] [--data_col {avg,lub,ulb}] [-w {none,hamming,bartlett,blackman,hanning}]
+usage: csv-fft.py [-h] -f SAMPLE_RATE -i INPUT [INPUT ...] [-o OUTPUT] [-od OUTPUT_DATA] [--dpi DPI] [-c FREQ_CAP FREQ_CAP] [-m {abs,imag}] [-s {log,mag}]
+                  [--data_col {avg,lub,ulb}] [--smooth SMOOTH] [-w {none,hamming,bartlett,blackman,hanning}]
 
 Plots the fft(s) of the input slices csv
 
@@ -91,6 +92,7 @@ optional arguments:
                         Enable logarithmic scale on the y axis
   --data_col {avg,lub,ulb}
                         Data column to be used for fft, by default averages both columns
+  --smooth SMOOTH       Smoothing factor [0-1]. Smoothens data using a cubic spline approximation
   -w {none,hamming,bartlett,blackman,hanning}, --window {none,hamming,bartlett,blackman,hanning}
                         Apply window before FFT
 ```
