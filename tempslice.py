@@ -89,27 +89,7 @@ def tempslice(start, end, imgs):
     return slc_g
 
 
-def main():
-    # Argument parser
-    parser = argparse.ArgumentParser(description='Produces a PIL image containing a column of pixels for every input image.\
-                                     The number and location of the pixels is chosen by the user by defining a\
-                                     start and end point over the input images. All images must be the same\
-                                     resolution.')
-    parser._action_groups.pop()
-    required = parser.add_argument_group('required arguments')
-    optional = parser.add_argument_group('optional arguments')
-
-    # Datasets parameters
-    required.add_argument('-s', '--start', type=int, nargs=2,
-                          help='Starting point coordinates of the line as x y', required=True)
-    required.add_argument('-e', '--end', type=int, nargs=2,
-                          help='Ending point coordinates of the line as x,y', required=True)
-    required.add_argument('-i', '--input', type=str,
-                          nargs='+', help='List of input files', required=True)
-    optional.add_argument('-o', '--output', type=str, help='Path for 2 output files containing the slice and the first frame with the slice location. E.g. /home/user/Documents/output_file_name which will result in /home/user/Documents/output_file_name_loc.png & /home/user/Documents/output_file_name_slice.png')
-
-    args = parser.parse_args()
-
+def main(args):
     # Slice
     slc = tempslice(args.start, args.end, args.input)
     if args.output != None:
@@ -132,4 +112,24 @@ def main():
 
 # Main ==========================================================================
 if __name__ == '__main__':
-    main()
+    # Argument parser
+    parser = argparse.ArgumentParser(description='Produces a PIL image containing a column of pixels for every input image.\
+                                     The number and location of the pixels is chosen by the user by defining a\
+                                     start and end point over the input images. All images must be the same\
+                                     resolution.')
+    parser._action_groups.pop()
+    required = parser.add_argument_group('required arguments')
+    optional = parser.add_argument_group('optional arguments')
+
+    # Datasets parameters
+    required.add_argument('-s', '--start', type=int, nargs=2,
+                          help='Starting point coordinates of the line as x y', required=True)
+    required.add_argument('-e', '--end', type=int, nargs=2,
+                          help='Ending point coordinates of the line as x,y', required=True)
+    required.add_argument('-i', '--input', type=str,
+                          nargs='+', help='List of input files', required=True)
+    optional.add_argument('-o', '--output', type=str, help='Path for 2 output files containing the slice and the first frame with the slice location. E.g. /home/user/Documents/output_file_name which will result in /home/user/Documents/output_file_name_loc.png & /home/user/Documents/output_file_name_slice.png')
+
+    args = parser.parse_args()
+    
+    main(args)
