@@ -91,13 +91,16 @@ def main():
 
         if args.freq_cap != None:
             sc = 0
-            ec = args.sample_rate
+            ec = None
             for j in range(len(xf)):
                 if xf[j] <= args.freq_cap[0]:
                     sc = j
                 if xf[j] >= args.freq_cap[1]:
                     ec = j
                     break
+            if ec == None:
+                ec = len(xf)-1
+            
             xf = xf[sc:ec]
             yf = yf[sc:ec]
         
