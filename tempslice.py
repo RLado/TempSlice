@@ -79,7 +79,7 @@ def tempslice(start, end, imgs):
 
     """
 
-    line_coord = bresenham(start, end)
+    line_coord = bresenham(start, end)[:-1]
     slc_g = Image.new('RGBA', (len(imgs), len(line_coord)), (0, 0, 0, 255))
     for i, img in enumerate(imgs):
         im = Image.open(img)
@@ -90,6 +90,17 @@ def tempslice(start, end, imgs):
 
 
 def main(args):
+    # If input is a .txt list of input files unpack now
+    # (Files in a list are placed at the end of the queue)
+    for i, file in enumerate(args.input):
+        if '.txt' in file[-4:]:
+            args.input.pop(i)
+            with open(file, 'r') as fobj:
+                contents = fobj.read()
+                for path in contents.split('\n'):
+                    if path != '':
+                        args.input.append(path)
+    
     # Slice
     slc = tempslice(args.start, args.end, args.input)
     if args.output != None:
